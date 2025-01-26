@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+
+// Model
+message UserProto {
+  string id = 1;
+  string email = 2;
+  string first_name = 3;
+  string last_name = 4;
+}
+
+message ProtoException {
+  string exception = 1; 
+  string message = 2;
+}
+
+
+// Services
+service UserProtoService {
+  rpc CreateUser(CreateUserRequest) returns (UserServiceResponse) {}
+  rpc GetUsers(GetUsersRequest) returns (UserServiceResponse) {}
+  // rpc GetUserById(GetUserByIdRequest) returns (UserServiceResponse) {}
+  // rpc GetUserByEmail(GetUserByEmailRequest) returns (UserServiceResponse) {}
+  rpc DeleteUserById(DeleteUserByIdRequest) returns (UserServiceResponse) {}
+  rpc UpdateUser(UpdateUserRequest) returns (UserServiceResponse) {}
+}
+
+
+// Reuqests
+message CreateUserRequest {
+  string email = 2;
+  string first_name = 3;
+  string last_name = 4;
+}
+
+message GetUsersRequest {
+  optional string query = 1;
+}
+message GetUserByIdRequest {
+  string id = 1;
+}
+message GetUserByEmailRequest {
+  string email = 1;
+}
+message DeleteUserByIdRequest {
+  string id = 1;
+}
+message UpdateUserRequest {
+  string id = 1;
+  string email = 2;
+  string first_name = 3;
+  string last_name = 4;
+}
+
+
+// Responses
+message UserServiceResponse {
+  string response = 1;
+}
+
+
+
+// protoc --dart_out=grpc:lib/grpc/generated --proto_path=lib lib/grpc/user.proto
+
+// dart pub run build_runner build
